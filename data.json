@@ -1,0 +1,42 @@
+{
+  "ping": "OK",
+  "name": "Milan Andric",
+  "email address": "mandric@gmail.com",
+  "source": "https://github.com/mandric/resume-service-nodejs",
+  "resume": "https://tinyurl.com/y55x8ndr",
+  "referrer": "Recruiter",
+  "years": "10",
+  "phone": "+13126460420",
+  "position": "Backend Web Developer",
+  "degree": "BA",
+  "status": "Yes",
+  "_tests": {
+    "puzzles": [
+      [
+        "A---> B---< C-<=- D->-=",
+        "A=>>> B<=>< C<<=< D<>>="
+      ],
+      [
+        "A--<- B-=-> C---< D-->=",
+        "A=<<< B>=>> C><=< D><>="
+      ],
+      [
+        "A--<- B-->- C>-=- D<--=",
+        "A=<<> B>=>> C><=> D<<<="
+      ],
+      [
+        "A---< B<=-- C--=> D>---",
+        "A=><< B<=<< C>>=> D>><="
+      ],
+      [
+        "A=>-- B<--- C-<-- D>---",
+        "A=>>< B<=>< C<<=< D>>>="
+      ],
+      [
+        "A=>--- B<---- C-<--- D>---- E--<--",
+        "A=>><> B<=><> C<<=<> D>>>=> E<<<<="
+      ]
+    ]
+  }
+}
+  
