@@ -7,14 +7,14 @@
 //   solution: "A=>>> B<=>< C<<=< D<>>="
 //
 
-const isGt = (r_idx, c_idx, puzzle) => {
-  if (puzzle[r_idx][c_idx] === '>') return true
-  if (puzzle[r_idx][c_idx] === '<') return false
+const isGt = (ridx, cidx, puzzle) => {
+  if (puzzle[ridx][cidx] === '>') return true
+  if (puzzle[ridx][cidx] === '<') return false
 }
 
-const isLt = (r_idx, c_idx, puzzle) => {
-  if (puzzle[r_idx][c_idx] === '<') return true
-  if (puzzle[r_idx][c_idx] === '>') return false
+const isLt = (ridx, cidx, puzzle) => {
+  if (puzzle[ridx][cidx] === '<') return true
+  if (puzzle[ridx][cidx] === '>') return false
 }
 
 const setVals = (posGt, posLt, puzzle) => {
@@ -29,7 +29,7 @@ const setVals = (posGt, posLt, puzzle) => {
 //
 // Example:
 //
-// solve for row_idx 0, col_idx 2 because it's still empty after initial pass.
+// solve for ridx 0, cidx 2 because it's still empty after initial pass.
 //
 // is 0 > 1 ?
 //   is 1 > 2 ?
@@ -40,37 +40,35 @@ const setVals = (posGt, posLt, puzzle) => {
 //   is 1 < 2 ?
 //     then setVals 0 < 2
 //     continue to next empty val
-//     
-const solveVal = (row_idx, col_idx, puzzle) => {
-  puzzle[row_idx].forEach((val, col) => {
+//
+const solveVal = (ridx, cidx, puzzle) => {
+  puzzle[ridx].forEach((val, col) => {
     if (val === '>') {
-      if (isGt(col, col_idx, puzzle)) {
-        setVals(row_idx, col_idx, puzzle)
+      if (isGt(col, cidx, puzzle)) {
+        setVals(ridx, cidx, puzzle)
       }
     } else if (val === '<') {
-      if (isLt(col, col_idx, puzzle)) {
-        setVals(col_idx, row_idx, puzzle)
+      if (isLt(col, cidx, puzzle)) {
+        setVals(cidx, ridx, puzzle)
       }
     }
   })
 }
 
 const solve = puzzle => {
-  let count = 0
-  const score = {}
   let retString = false
   if (typeof puzzle === 'string') {
     retString = true
     puzzle = convert(puzzle)
   }
-  puzzle.forEach((row, row_idx) => {
-    row.forEach((val, col_idx) => {
+  puzzle.forEach((row, ridx) => {
+    row.forEach((val, cidx) => {
       if (val === '>') {
-        setVals(row_idx, col_idx, puzzle)
+        setVals(ridx, cidx, puzzle)
       } else if (val === '<') {
-        setVals(col_idx, row_idx, puzzle)
+        setVals(cidx, ridx, puzzle)
       } else if (!val) {
-        solveVal(row_idx, col_idx, puzzle)
+        solveVal(ridx, cidx, puzzle)
       }
     })
   })
@@ -86,8 +84,8 @@ const solve = puzzle => {
 //  To:
 //      A   B   C    D
 //  A ['=', '', '', '>'],
-//  B ['', '=', '', '<'], 
-//  C ['', '<', '=', ''], 
+//  B ['', '=', '', '<'],
+//  C ['', '<', '=', ''],
 //  D ['', '>', '', '=']
 //
 const convertStr = str => {
@@ -95,18 +93,18 @@ const convertStr = str => {
   const empty = '-'
   const ret = []
   // remove extra characters
-  str = str.replace(/[^\s+-><=]/g,'')
-  str.split(/\s+/).forEach((row, r_idx) => {
-    if (typeof ret[r_idx] === 'undefined') {
-      ret[r_idx] = []
+  str = str.replace(/[^\s+-><=]/g, '')
+  str.split(/\s+/).forEach((row, ridx) => {
+    if (typeof ret[ridx] === 'undefined') {
+      ret[ridx] = []
     }
     row.split('').forEach((val, idx) => {
-      if (r_idx === idx) {
-        ret[r_idx][idx] = '='
+      if (ridx === idx) {
+        ret[ridx][idx] = '='
       } else if (valid.indexOf(val) >= 0) {
-        ret[r_idx][idx] = val
+        ret[ridx][idx] = val
       } else if (val === empty) {
-        ret[r_idx][idx] = ''
+        ret[ridx][idx] = ''
       }
     })
   })
@@ -140,7 +138,6 @@ const format = puzzle => {
   })
   return ` ${header}\n${puzzle.replace(/\s+/g, '\n')}`
 }
-
 
 exports.solve = solve
 exports.format = format

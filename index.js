@@ -1,5 +1,4 @@
 const express = require('express')
-const path = require('path')
 
 const PORT = process.env.PORT || 5000
 const puzzle = require('./puzzle')
@@ -10,14 +9,14 @@ const index = (req, res) => {
 //  console.log(req.headers)
 //  console.log(req.query)
 //  console.log(req.body)
-  const q = typeof req.query.q !== 'undefined' ? req.query.q.toLowerCase() : '';
+  const q = typeof req.query.q !== 'undefined' ? req.query.q.toLowerCase() : ''
   const val = data[q]
   if (val) {
     return res.send(val)
   }
   if (q === 'puzzle' && req.query.d) {
     let puz = req.query.d.split('\n').filter(
-      el => el.match(/\w[\-<>=]+/)
+      el => el.match(/[a-zA-Z][-<>=]+/)
     ).join(' ')
     return res.send(puzzle.format(
       puzzle.solve(puz)
@@ -27,7 +26,7 @@ const index = (req, res) => {
 }
 
 express()
-  .use ((req, res, next) => {
+  .use((req, res, next) => {
     let data = ''
     req.setEncoding('utf8')
     req.on('data', chunk => {
@@ -39,5 +38,5 @@ express()
     })
   })
   .get('/', index)
-  //.post('/', index)
-  .listen(PORT, () => console.log(`Listening on ${ PORT }`))
+  // .post('/', index)
+  .listen(PORT, () => console.log(`Listening on ${PORT}`))
